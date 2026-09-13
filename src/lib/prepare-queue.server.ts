@@ -86,7 +86,7 @@ async function generateReplies(
 
 Rules:
 - One reply per tweet, same order.
-- Length: 10–30 words. Bias to the short end (~10–16). Go longer only when the point needs the extra context.
+- Length: 10–30 words. Default to the short end (~10–16). Only go longer (still ≤30) when the post genuinely needs more context to make the point land. Cut filler.
 - Sound like a real person. No "as an AI", no hashtags, no emoji unless the voice asks.
 - If tweet text is unavailable, write a short generic nod or question that still works as a first reply. Do not invent facts.
 
@@ -104,7 +104,7 @@ Return ONLY JSON: {"replies":["..."]} with exactly ${tweets.length} strings.`;
     body: JSON.stringify({
       model: "grok-4.5",
       temperature: 0.7,
-      max_tokens: Math.min(1600, 80 * tweets.length + 200),
+      max_tokens: Math.min(1200, 50 * tweets.length + 160),
       messages: [{ role: "user", content: prompt }],
     }),
   });
